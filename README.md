@@ -1,0 +1,1 @@
+this is a MERN stack project name job portal, here both student and recruiter can login
