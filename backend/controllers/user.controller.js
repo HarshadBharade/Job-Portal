@@ -105,7 +105,7 @@ try {
   console.log(error);
 }
 }
-
+// update user profile
 export const updateProfile = async(req,res)=>{
   try {
     const{fullname, email, phoneNumber, bio, skills} = req.body;
