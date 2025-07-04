@@ -1,37 +1,74 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../shared/Navbar";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { RadioGroup } from "../ui/radio-group";
-import { RadioGroupItem } from "../ui/radio-group";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 
 const signup = () => {
+
+  const [input, setInput] = useState({
+      fullname:"",
+      email: "",
+      password: "",
+      phoneNumber:"",
+      role:"",
+      file:""
+    });
+  
+    const changeEventHandler = (e) =>{
+      setInput({...input,[e.target.name]:e.target.value});
+    }
+    const changeFileHandler = (e) =>{
+      setInput({...input, file:e.target.files?.[0]});
+    }
+
+    const submitHandler=async(e)=>{
+      e.preventDefault();
+      console.log(input);
+    }
+
   return (
     <div>
       <Navbar />
       <div className="flex items-center justify-center max-w-7xl mx-auto ">
         <form
-          action=""
+          onSubmit={submitHandler}
           className="w-1/2 border border-gray-200 rounded-md p-4 my-10"
         >
           <h1 className="font-bold text-xl mb-5">Sign Up</h1>
           <div className="my-2">
             <Label>Full Name</Label>
-            <Input type="text" placeholder="harshad" />
+            <Input type="text"
+            value= {input.fullname}
+            name="fullname"
+            onChange={changeEventHandler}
+            placeholder="harshad" />
           </div>
           <div className="my-2">
             <Label>Email</Label>
-            <Input type="Email" placeholder="harshad@gmail.com" />
+            <Input type="Email"
+            value= {input.email}
+            name="email"
+            onChange={changeEventHandler}
+            placeholder="harshad@gmail.com" />
           </div>
           <div className="my-2">
             <Label>Phone Number</Label>
-            <Input type="Number" placeholder="*******" />
+            <Input type="Number"
+            value= {input.phoneNumber}
+            name="phoneNumber"
+            onChange={changeEventHandler}
+            placeholder="*******" />
           </div>
           <div className="my-2">
             <Label>Password</Label>
-            <Input type="Password" placeholder="Password" />
+            <Input type="Password" 
+            value= {input.password}
+            name="password"
+            onChange={changeEventHandler}
+            placeholder="Password" />
           </div>
           <div className="flex items-center justify-between">
             <RadioGroup className="flex items-center gap-4 my-5">
@@ -40,6 +77,8 @@ const signup = () => {
                   type="radio"
                   name="role"
                   value="student"
+                  checked={input.role == 'student'}
+                  onChange={changeEventHandler}
                   className="cursor-pointer"
                 />
                 <Label htmlFor="r1">Student</Label>
@@ -49,6 +88,8 @@ const signup = () => {
                   type="radio"
                   name="role"
                   value="recuriter"
+                  checked={input.role == 'recuriter'}
+                  onChange={changeEventHandler}
                   className="cursor-pointer"
                 />
                 <Label htmlFor="r2">Recuriter</Label>
@@ -56,7 +97,11 @@ const signup = () => {
             </RadioGroup>
             <div className="flex items-center gap-2">
               <Label>Profile</Label>
-              <Input accept="image/*" type="file" className="cursor-pointer" />
+              <Input accept="image/*"
+               type="file" 
+               onChange={changeFileHandler}
+               className="cursor-pointer" 
+               />
             </div>
           </div>
           <Button type="submit" className='w-full my-4'>Sign Up</Button>
